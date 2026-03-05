@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="https://via.placeholder.com/150x150.png?text=QULT+Logo" alt="QULT Logo" width="120" />
+  <img width="2816" height="1536" alt="icon" src="https://github.com/user-attachments/assets/abff9331-468c-4d75-977a-280ad5ae6df9" />
+
 
   # QULT (Culture Swipe)
 
@@ -45,7 +46,7 @@ During the late stages of development, I observed highly capitalized competitors
 
 I realized that continuing to code features without a robust business strategy was a classic engineering trap. Therefore, **I made the pragmatic decision to put the commercial launch of QULT on pause.**
 
-This experience was a turning point. It solidified my desire to transition from a pure technical builder to a **Product Manager and Entrepreneur**. It is exactly why I am currently pursuing a Master in Management at a top-tier business school: to acquire the strategic, financial, and marketing acumen necessary to bridge the gap between engineering execution and business viability.
+This experience was a turning point. It solidified my desire to transition from a pure technical builder to a **Product Manager and Entrepreneur**. 
 
 > QULT stands as proof of my ability to build. My next step is learning how to sell and scale.
 
