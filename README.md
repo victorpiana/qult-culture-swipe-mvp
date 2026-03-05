@@ -1,5 +1,6 @@
 <div align="center">
-  <img width="2816" height="1536" alt="icon" src="https://github.com/user-attachments/assets/abff9331-468c-4d75-977a-280ad5ae6df9" />
+  <img width="585" height="475" alt="image" src="https://github.com/user-attachments/assets/fb5e2098-1810-4ef0-9e31-a62f9748482b" />
+
 
 
   # QULT (Culture Swipe)
