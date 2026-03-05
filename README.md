@@ -1,64 +1,67 @@
 <div align="center">
   <img width="585" height="475" alt="image" src="https://github.com/user-attachments/assets/fb5e2098-1810-4ef0-9e31-a62f9748482b" />
 
+# QULT: Gamified Social Micro-Learning (MVP)
 
+> This repository contains the MVP for a gamified micro-learning mobile application. Developed as a solo full-stack project, QULT aims to transform passive scrolling into active learning by hijacking the dopamine-driven UX of platforms like TikTok and applying it to general culture, science, and history.
 
-  # QULT (Culture Swipe)
-
-  **Transforming passive scrolling into active learning. A gamified, social micro-learning platform built for the TikTok generation.**
-</div>
+[![Framework](https://img.shields.io/badge/Framework-React_Native-61DAFB.svg)](https://reactnative.dev/)
+[![Toolchain](https://img.shields.io/badge/Toolchain-Expo-black.svg)](https://expo.dev/)
+[![Backend](https://img.shields.io/badge/Backend-Supabase-3ECF8E.svg)](https://supabase.com/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791.svg)](https://www.postgresql.org/)
+[![Animations](https://img.shields.io/badge/Animations-Reanimated-blue.svg)](https://docs.swmansion.com/react-native-reanimated/)
 
 ---
 
-## 👁️ The Vision
+## 🎯 Project Overview & The Vision
 
-Modern users spend hours daily consuming short-form content, often left with a feeling of wasted time but addicted to the UI's instant gratification. **QULT** was born from a simple product hypothesis: *What if we hijacked the dopamine-driven UX of infinite vertical scrolling and applied it to general culture, history, science, and art?*
+Modern users spend hours daily consuming short-form content, often addicted to the UI's instant gratification but left with a feeling of wasted time. **QULT** was born from a simple product hypothesis: *What if we reduced the friction of learning to zero by using the exact same interface?*
 
-The goal was to reduce the friction of learning to zero. By combining bite-sized knowledge cards, engaging native-like swipe gestures, and robust gamification, QULT aims to make daily intellectual enrichment as effortless as scrolling through social media.
+The goal was to combine bite-sized knowledge cards, engaging native-like vertical swipe gestures, and robust gamification to make daily intellectual enrichment as effortless as scrolling through social media.
 
-## ✨ Core Features
+### 💡 Lessons Learned & The Pivot
 
-I architected and developed the entire application from scratch, focusing on a seamless user experience and a scalable backend.
+While I am incredibly proud of the technical execution — building a fully functional, real-time, full-stack application as a solo developer — this project served as a massive **wake-up call**.
 
-- **Infinite Knowledge Feed:** A high-performance vertical flatlist featuring TikTok-style swiping. Implemented composed gesture handlers (double-tap to like, long-press to deep-dive into detailed articles).
-- **Gamified Daily Quiz:** A daily challenge dynamically generated from the database. Features include streak tracking, performance analytics, and custom progress charts to drive user retention (DAU).
-- **Real-Time Social Ecosystem:** A complete social graph allowing users to follow friends, view leaderboards, and engage in **real-time chat** powered by WebSockets.
+During development, highly capitalized competitors entered the micro-learning market with similar concepts. It became obvious that **a flawless technical product is only 20% of a startup's success**. The remaining 80% relies on Go-To-Market strategy, user acquisition, competitive analysis, and clear product positioning.
+
+Realizing that continuing to code features without a robust business strategy was a classic engineering trap, **I made the pragmatic decision to put the commercial launch of QULT on pause.** This experience solidified my desire to transition from a pure technical builder to a **Product Manager and Entrepreneur**. It is exactly why I am now pivoting toward a Master in Management at a top-tier business school: to acquire the strategic and business acumen necessary to bridge the gap between engineering execution and market success.
+
+---
+
+## ✨ Core Features (MVP)
+
+I architected and developed the entire application from scratch, focusing on seamless UX and a scalable real-time backend:
+
+- **Infinite Knowledge Feed:** A high-performance vertical flatlist featuring TikTok-style swiping, implemented with composed gesture handlers (double-tap to like, long-press to read detailed articles).
+- **Gamified Daily Quiz:** A daily challenge dynamically generated from the database. It features streak tracking, performance analytics, and custom progress charts to drive Daily Active Users (DAU).
+- **Real-Time Social Ecosystem:** A complete social graph allowing users to follow friends, view dynamic leaderboards, and engage in **real-time chat** powered by WebSockets.
 - **Frictionless Sharing:** In-app content sharing directly into the chat system, seamlessly blending content discovery with social interaction.
 - **User Analytics Dashboard:** Visualized personal data (interests broken down by categories via pie charts, historical win rates) to give users a sense of progression.
 
+---
+
 ## 🛠️ Tech Stack
 
-As the sole builder on this project, I managed the entire stack — from UI/UX design to backend database architecture.
+As the sole builder on this project, I managed the entire stack:
 
-| Layer | Technology |
-|---|---|
-| **Frontend** | React Native, Expo |
-| **Animations & Interactions** | React Native Reanimated, React Native Gesture Handler (60fps native-like fluidity) |
-| **Backend & BaaS** | Supabase (PostgreSQL) |
-| **Authentication** | Supabase Auth (Email/Password, Session persistence) |
-| **Real-Time** | Supabase Real-time Subscriptions (chat ecosystem) |
-| **Performance** | `expo-image` for advanced memory/disk caching during infinite scrolling |
+| Layer | Technology | Rationale |
+|---|---|---|
+| **Frontend** | React Native & Expo | Rapid cross-platform deployment |
+| **Backend & BaaS** | Supabase (PostgreSQL) | Database, Auth & Real-time Subscriptions |
+| **Animations & Gestures** | React Native Reanimated & Gesture Handler | 60fps native-like fluid interactions |
+| **Performance** | Expo-Image | Advanced memory/disk caching for infinite scrolling |
 
-## 💡 Lessons Learned & The Pivot
+---
 
-While I am incredibly proud of the technical execution of QULT — successfully building a fully functional, real-time, full-stack application as a solo engineer — this project served as a massive **wake-up call**.
+## 🚀 How to Test (Local Setup)
 
-During the late stages of development, I observed highly capitalized competitors entering the micro-learning market with similar concepts. It became glaringly obvious that **a flawless technical product is only 20% of a startup's success**. The remaining 80% relies on Go-To-Market strategy, user acquisition, competitive analysis, monetization models, and clear product positioning.
-
-I realized that continuing to code features without a robust business strategy was a classic engineering trap. Therefore, **I made the pragmatic decision to put the commercial launch of QULT on pause.**
-
-This experience was a turning point. It solidified my desire to transition from a pure technical builder to a **Product Manager and Entrepreneur**. 
-
-> QULT stands as proof of my ability to build. My next step is learning how to sell and scale.
-
-## 🚀 Local Setup
-
-To run this project locally:
+To run this project locally on your machine:
 
 **1. Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/culture-swipe.git
-cd culture-swipe
+git clone https://github.com/victorpiana/qult-culture-swipe-mvp.git
+cd qult-culture-swipe-mvp
 ```
 
 **2. Install dependencies:**
@@ -77,6 +80,7 @@ Scan the generated QR code with the **Expo Go** app on your iOS or Android devic
 
 ---
 
-<div align="center">
-  <em>Built with passion, pragmatic thinking, and a focus on product value.</em>
-</div>
+## 👥 Author
+
+**Victor PIANA** — Sole Developer / Product Architect
+
