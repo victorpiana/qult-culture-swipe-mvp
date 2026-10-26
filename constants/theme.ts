@@ -1,53 +1,39 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+import { Dimensions } from 'react-native';
 
-import { Platform } from 'react-native';
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
+export const COLORS = {
+  bg: '#000000',
+  surface: '#121214',
+  surfaceElevated: '#18181b',
+  border: '#27272a',
+  borderSubtle: '#1e1e24',
+  
+  primary: '#4ade80', // QULT signature neon green
+  primaryLight: '#86efac',
+  primaryGlow: 'rgba(74, 222, 128, 0.25)',
+  
+  secondary: '#ff2d55', // Heart / like
+  correct: '#10b981',
+  wrong: '#ef4444',
+  orange: '#f59e0b',
+  blue: '#38bdf8',
+  purple: '#a855f7',
+  gold: '#fbbf24',
+  
+  text: '#ffffff',
+  textSub: '#d4d4d8',
+  textMuted: '#a1a1aa',
+  textDark: '#71717a',
+  
+  chatBubbleSelf: '#22c55e',
+  chatBubbleFriend: '#27272a',
+  overlay: 'rgba(0, 0, 0, 0.85)',
 };
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
-});
+export const METRICS = {
+  screenWidth: SCREEN_WIDTH,
+  screenHeight: SCREEN_HEIGHT,
+  tabBarHeight: 85,
+  borderRadius: 16,
+};
