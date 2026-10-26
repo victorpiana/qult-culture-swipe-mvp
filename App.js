@@ -87,6 +87,16 @@ const seededShuffle = (array) => {
   return shuffled;
 };
 
+// Découpage du contenu de la carte en Intro (visible) et Body (approfondi)
+const parseCardContent = (card) => {
+  const title = card?.short_text || 'Savoir QULT';
+  const rawLong = card?.long_text || '';
+  const parts = rawLong.split('\n\n');
+  const intro = parts[0] || '';
+  const body = parts.slice(1).join('\n\n') || parts[0] || '';
+  return { title, intro, body, full: rawLong };
+};
+
 // Safe Haptic feedback triggers
 const triggerHaptic = (type = 'light') => {
   try {
@@ -151,39 +161,11 @@ const getCategoryMeta = (catName) => {
   };
 };
 
-// Helper image sécurisée haute résolution (100% vérifiée)
+// Helper image sécurisée haute résolution
 const getSafeImageUrl = (card) => {
   const fallback = 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1080&q=80';
   if (!card?.image_url) return fallback;
-  
-  // Remplacement immédiat si ancien loremflickr
-  if (card.image_url.includes('loremflickr.com')) {
-    const match = card.image_url.match(/loremflickr\.com\/\d+\/\d+\/([a-zA-Z0-9_-]+)/);
-    const key = match ? match[1].toLowerCase() : '';
-    const map = {
-      pyramid: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1080&q=80',
-      samurai: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1080&q=80',
-      oxford: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=1080&q=80',
-      honey: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1080&q=80',
-      banana: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=1080&q=80',
-      saturn: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1080&q=80',
-      dna: 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=1080&q=80',
-      shark: 'https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=1080&q=80',
-      octopus: 'https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=1080&q=80',
-      koala: 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1080&q=80',
-      monalisa: 'https://images.unsplash.com/photo-1577720643272-265f09367456?w=1080&q=80',
-      vangogh: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1080&q=80',
-      sculpture: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1080&q=80',
-      painting: 'https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=1080&q=80',
-      gravity: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=1080&q=80',
-      japan: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1080&q=80',
-      moth: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1080&q=80',
-      eiffel: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=1080&q=80',
-      wombat: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=1080&q=80',
-      rocket: 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=1080&q=80'
-    };
-    if (map[key]) return map[key];
-  }
+  if (card.image_url.includes('loremflickr.com')) return fallback;
   return card.image_url;
 };
 
@@ -226,6 +208,7 @@ const DetailModal = ({ visible, card, onClose }) => {
   const themeName = card?.themes?.name || '';
   const meta = getCategoryMeta(categoryName);
   const safeImg = getSafeImageUrl(card);
+  const { title, intro, body } = parseCardContent(card);
   
   return (
     <Modal animationType="none" transparent visible={visible} onRequestClose={onClose}>
@@ -240,7 +223,7 @@ const DetailModal = ({ visible, card, onClose }) => {
                   <Text style={{ fontSize: 14 }}>{meta.emoji}</Text>
                   <Text style={[styles.modalCat, { color: meta.color }]}>{categoryName.toUpperCase()} • {themeName}</Text>
                 </View>
-                <Text style={styles.modalAuthor}>Rédigé par {card?.author_pseudo || 'Équipe QULT'}</Text>
+                <Text style={styles.modalAuthor}>Par {card?.author_pseudo || 'Équipe QULT'}</Text>
               </View>
               <TouchableOpacity onPress={onClose} style={styles.closeRoundBtn} activeOpacity={0.7}>
                 <Ionicons name="close" size={20} color="#ffffff"/>
@@ -248,10 +231,26 @@ const DetailModal = ({ visible, card, onClose }) => {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 60 }}>
-              <Text style={styles.modalTitle}>{card?.short_text}</Text>
+              <Text style={styles.modalTitle}>{title}</Text>
+              
+              {/* Encadré d'accroche principale (ce que l'utilisateur a vu sur le feed) */}
+              {intro ? (
+                <View style={[styles.modalLeadBox, { borderLeftColor: meta.color }]}>
+                  <Text style={styles.modalLeadText}>{intro}</Text>
+                </View>
+              ) : null}
+
+              {/* Séparateur élégant */}
               <View style={[styles.sep, { backgroundColor: meta.color }]} />
               
-              <Text style={styles.modalText}>{card?.long_text}</Text>
+              {/* Section d'analyse approfondie (ce qui vaut le coup de cliquer !) */}
+              <View style={styles.deepDiveSection}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                  <Ionicons name="bulb-outline" size={20} color={meta.color} />
+                  <Text style={styles.modalDeepDiveHeader}>Histoire & Analyse Complète</Text>
+                </View>
+                <Text style={styles.modalText}>{body}</Text>
+              </View>
               
               {safeImg && (
                 <View style={styles.modalImageWrapper}>
@@ -271,11 +270,11 @@ const DetailModal = ({ visible, card, onClose }) => {
                   activeOpacity={0.8}
                   onPress={() => {
                     triggerHaptic('light');
-                    Share.share({ message: `Découvre ça sur QULT : "${card?.short_text}" 🔥\n\n${card?.long_text}` });
+                    Share.share({ message: `Découvre ça sur QULT : "${title}" 🔥\n\n${intro}\n\nEn savoir plus : ${body}` });
                   }}
                 >
                   <Ionicons name="share-social-outline" size={20} color={COLORS.primary} />
-                  <Text style={styles.modalShareText}>Partager cette découverte</Text>
+                  <Text style={styles.modalShareText}>Partager cette pépite</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>
@@ -546,7 +545,7 @@ const ShareModal = ({ visible, onClose, myPseudo, card }) => {
   );
 };
 
-// --- CARTE FULLSCREEN DU FEED (TIKTOK STYLE + 2D SWIPE) ---
+// --- CARTE FULLSCREEN DU FEED (INSTAGRAM CAPTION STYLE + 2D SWIPE) ---
 
 const CardFull = memo(({ 
   card, 
@@ -595,6 +594,7 @@ const CardFull = memo(({
   const themeName = card?.themes?.name || '';
   const meta = getCategoryMeta(categoryName);
   const safeImgUri = getSafeImageUrl(card);
+  const { title, intro } = useMemo(() => parseCardContent(card), [card]);
 
   return (
     <View style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT, backgroundColor: '#000' }}>
@@ -631,64 +631,70 @@ const CardFull = memo(({
             </Animated.View>
           </View>
 
-          {/* 4. Dégradé sombre pour lisibilité maximale des textes */}
+          {/* 4. Dégradé sombre progressif pour lisibilité maximale des textes */}
           <LinearGradient 
-            colors={['rgba(0,0,0,0.5)', 'transparent', 'rgba(0,0,0,0.85)', 'rgba(0,0,0,0.98)']} 
+            colors={['rgba(0,0,0,0.5)', 'transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.92)', 'rgba(0,0,0,0.99)']} 
+            locations={[0, 0.35, 0.6, 0.8, 1]}
             style={styles.cardUi} 
             pointerEvents="box-none"
           >
-            {/* Contenu textuel */}
+            {/* Contenu textuel Instagram-Caption Style */}
             <View style={styles.cardContent}>
-              {/* Pagination 2D horizontale si le thème a plusieurs cartes */}
-              {totalCards > 1 && (
-                <View style={styles.horizontalIndicator}>
-                  <View style={styles.dotsRow}>
-                    {Array.from({ length: totalCards }).map((_, i) => (
-                      <View 
-                        key={i} 
-                        style={[
-                          styles.indicatorDot, 
-                          i === currentIndex ? styles.indicatorDotActive : styles.indicatorDotInactive
-                        ]} 
-                      />
-                    ))}
+              
+              {/* Ligne Méta : Badge Catégorie + Thème + Pagination 2D */}
+              <View style={styles.metaRow}>
+                <View style={styles.tagGroup}>
+                  <View style={[styles.tag, { backgroundColor: meta.color }]}>
+                    <Text style={styles.tagText}>{categoryName.toUpperCase()}</Text>
                   </View>
-                  {currentIndex === 0 ? (
-                    <View style={styles.swipeHintBadge}>
-                      <Ionicons name="arrow-forward" size={12} color="#000" style={{ marginRight: 4 }} />
-                      <Text style={styles.swipeHintText}>Glisser ➔ pour approfondir ({totalCards})</Text>
+                  {themeName ? (
+                    <View style={styles.themeTag}>
+                      <Text style={styles.themeTagText}>{themeName}</Text>
                     </View>
-                  ) : (
-                    <Text style={styles.horizontalPageText}>{currentIndex + 1} / {totalCards}</Text>
-                  )}
+                  ) : null}
                 </View>
-              )}
 
-              <View style={styles.tagRow}>
-                <View style={[styles.tag, { backgroundColor: meta.color }]}>
-                  <Text style={styles.tagText}>{categoryName.toUpperCase()}</Text>
-                </View>
-                {themeName ? (
-                  <View style={styles.themeTag}>
-                    <Text style={styles.themeTagText}>{themeName}</Text>
+                {totalCards > 1 && (
+                  <View style={styles.horizontalPill}>
+                    <View style={styles.dotsRow}>
+                      {Array.from({ length: totalCards }).map((_, i) => (
+                        <View 
+                          key={i} 
+                          style={[
+                            styles.indicatorDot, 
+                            i === currentIndex ? styles.indicatorDotActive : styles.indicatorDotInactive
+                          ]} 
+                        />
+                      ))}
+                    </View>
+                    <Text style={styles.horizontalPillText}>{currentIndex + 1}/{totalCards}</Text>
                   </View>
-                ) : null}
+                )}
               </View>
 
+              {/* Titre Accrocheur */}
               <TouchableOpacity activeOpacity={0.88} onPress={onOpen}>
-                <Text style={styles.cardTitle}>{card.short_text}</Text>
-                <View style={styles.readMoreHintRow}>
-                  <Ionicons name="book-outline" size={14} color={COLORS.primary} style={{ marginRight: 6 }} />
-                  <Text style={styles.readMoreHint}>Appuie ou touche "Lire" pour tout savoir 📖</Text>
-                </View>
+                <Text style={styles.cardTitle}>{title}</Text>
               </TouchableOpacity>
+
+              {/* Description directe visible au scroll (Instagram Caption Style) */}
+              {intro ? (
+                <TouchableOpacity activeOpacity={0.85} onPress={onOpen} style={styles.captionTouchable}>
+                  <Text style={styles.cardCaption} numberOfLines={3}>
+                    {intro}
+                  </Text>
+                  <View style={styles.readMoreInline}>
+                    <Text style={styles.readMoreInlineText}>... Lire la suite 📖</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
             </View>
 
             {/* Boutons d'actions verticaux (TikTok Style) */}
             <View style={styles.cardActions}>
               <TouchableOpacity style={styles.actionBtn} onPress={() => { triggerHaptic('light'); onLike(); }}>
                 <View style={[styles.actionIconCircle, isLiked && { backgroundColor: 'rgba(255, 45, 85, 0.25)', borderColor: COLORS.secondary }]}>
-                  <Ionicons name={isLiked ? "heart" : "heart-outline"} size={30} color={isLiked ? COLORS.secondary : "#ffffff"} />
+                  <Ionicons name={isLiked ? "heart" : "heart-outline"} size={28} color={isLiked ? COLORS.secondary : "#ffffff"} />
                 </View>
                 <Text style={[styles.actionText, isLiked && { color: COLORS.secondary, fontWeight: '700' }]}>
                   {isLiked ? 'Aimé' : 'Like'}
@@ -697,7 +703,7 @@ const CardFull = memo(({
 
               <TouchableOpacity style={styles.actionBtn} onPress={() => { triggerHaptic('success'); onMemorize(); }}>
                 <View style={[styles.actionIconCircle, isMemorized && { backgroundColor: 'rgba(74, 222, 128, 0.25)', borderColor: COLORS.primary }]}>
-                  <Ionicons name={isMemorized ? "bookmark" : "bookmark-outline"} size={28} color={isMemorized ? COLORS.primary : "#ffffff"} />
+                  <Ionicons name={isMemorized ? "bookmark" : "bookmark-outline"} size={26} color={isMemorized ? COLORS.primary : "#ffffff"} />
                 </View>
                 <Text style={[styles.actionText, isMemorized && { color: COLORS.primary, fontWeight: '700' }]}>
                   {isMemorized ? 'Appris' : 'À retenir'}
@@ -705,15 +711,15 @@ const CardFull = memo(({
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.actionBtn} onPress={() => { triggerHaptic('light'); onOpen(); }}>
-                <View style={styles.actionIconCircle}>
-                  <Ionicons name="book-outline" size={26} color="#ffffff" />
+                <View style={[styles.actionIconCircle, { borderColor: COLORS.primaryGlow }]}>
+                  <Ionicons name="book-outline" size={24} color={COLORS.primary} />
                 </View>
-                <Text style={styles.actionText}>Lire</Text>
+                <Text style={[styles.actionText, { color: COLORS.primary, fontWeight: '700' }]}>Lire +</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.actionBtn} onPress={() => { triggerHaptic('light'); onShare(); }}>
                 <View style={styles.actionIconCircle}>
-                  <Ionicons name="paper-plane-outline" size={26} color="#ffffff" />
+                  <Ionicons name="paper-plane-outline" size={24} color="#ffffff" />
                 </View>
                 <Text style={styles.actionText}>Partager</Text>
               </TouchableOpacity>
@@ -894,18 +900,17 @@ const HomeScreen = ({ feedData, toggleLike, toggleMemorize, likedCards, memorize
 
   return ( 
     <View style={{ flex: 1, backgroundColor: '#000' }}> 
-      {/* Top Floating Header */}
+      {/* Top Floating Header Ergonomique */}
       <View style={styles.feedHeaderTop} pointerEvents="box-none">
         <View style={styles.feedLogoBox}>
           <Text style={styles.feedLogoText}>QULT</Text>
           <View style={styles.neonDot} />
         </View>
         <View style={styles.feedHeaderRight}>
-          <View style={styles.streakBadge}>
+          <View style={styles.userStatusPill}>
             <Text style={{ fontSize: 13 }}>🔥</Text>
             <Text style={styles.streakNum}>3 j</Text>
-          </View>
-          <View style={styles.headerUserBadge}>
+            <View style={styles.statusDivider} />
             <Text style={styles.headerUserText}>👤 {myPseudo}</Text>
           </View>
         </View>
@@ -1183,7 +1188,6 @@ const FriendsScreen = ({ myPseudo, onOpenProfile }) => {
     }
 
     try {
-      // Tenter de récupérer les scores réels du jour
       const today = getLocalDateISO();
       const { data: historyData } = await supabase
         .from('user_quiz_history')
@@ -1439,13 +1443,11 @@ export default function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-        // Restaurer le pseudo sauvegardé
         const savedPseudo = await AsyncStorage.getItem(STORAGE_KEYS.USER_PSEUDO);
         if (savedPseudo) {
           setUserPseudo(savedPseudo);
         }
 
-        // Restaurer les likes et mémorisés
         const savedLikes = await AsyncStorage.getItem(STORAGE_KEYS.LIKED_CARDS);
         if (savedLikes) {
           setLikedCards(new Set(JSON.parse(savedLikes)));
@@ -1460,7 +1462,6 @@ export default function App() {
           setMemorizedCards(new Set(['c2', 'c5']));
         }
 
-        // Restaurer l'état du quiz d'aujourd'hui
         const todayIso = getLocalDateISO();
         const playedTodayStr = await AsyncStorage.getItem(STORAGE_KEYS.PLAYED_TODAY + todayIso);
         const scoreTodayStr = await AsyncStorage.getItem(STORAGE_KEYS.TODAY_SCORE + todayIso);
@@ -1469,7 +1470,6 @@ export default function App() {
           if (scoreTodayStr !== null) setTodayScore(parseInt(scoreTodayStr, 10));
         }
 
-        // Vérifier la session Supabase
         const { data: { session: existingSession } } = await supabase.auth.getSession();
         setSession(existingSession);
         if (existingSession) extractPseudo(existingSession);
@@ -1515,7 +1515,6 @@ export default function App() {
         .order('importance_level', { ascending: false });
       
       if (data && !error && data.length > 0) {
-        // Précharger les 10 premières images pour fluidité absolue
         data.slice(0, 10).forEach(c => {
           const url = getSafeImageUrl(c);
           if (url) Image.prefetch(url);
@@ -1534,7 +1533,6 @@ export default function App() {
       // ignore
     }
 
-    // Fallback Mock enrichi
     const groups = {};
     MOCK_CARDS.forEach(c => {
       const k = c.theme_id || 'general';
@@ -1719,7 +1717,7 @@ export default function App() {
   );
 }
 
-// --- STYLES MODERNES & POLIS ---
+// --- STYLES MODERNES & ERGONOMIQUES ---
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.bg },
@@ -1817,7 +1815,7 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
     paddingTop: Platform.OS === 'ios' ? 52 : 36,
-    paddingHorizontal: 20,
+    paddingHorizontal: 18,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -1825,26 +1823,19 @@ const styles = StyleSheet.create({
   feedLogoBox: { flexDirection: 'row', alignItems: 'center' },
   feedLogoText: { color: '#ffffff', fontSize: 24, fontWeight: '900', letterSpacing: 2 },
   neonDot: { width: 7, height: 7, borderRadius: 3.5, backgroundColor: COLORS.primary, marginLeft: 3, marginTop: 6 },
-  feedHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  streakBadge: {
+  feedHeaderRight: { flexDirection: 'row', alignItems: 'center' },
+  userStatusPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    backgroundColor: 'rgba(10, 10, 12, 0.65)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.15)'
   },
+  statusDivider: { width: 1, height: 12, backgroundColor: 'rgba(255,255,255,0.2)', marginHorizontal: 8 },
   streakNum: { color: COLORS.orange, fontWeight: 'bold', fontSize: 12, marginLeft: 4 },
-  headerUserBadge: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.15)'
-  },
   headerUserText: { color: '#ffffff', fontWeight: '600', fontSize: 12 },
 
   // Feed Card
@@ -1858,84 +1849,133 @@ const styles = StyleSheet.create({
     flex: 1, 
     justifyContent: 'flex-end', 
     flexDirection: 'row', 
-    padding: 20, 
-    paddingBottom: 110 
+    paddingHorizontal: 16, 
+    paddingBottom: 100 
   },
-  cardContent: { flex: 1, justifyContent: 'flex-end', paddingRight: 15 },
-  horizontalIndicator: {
-    marginBottom: 10,
+  cardContent: { flex: 1, justifyContent: 'flex-end', paddingRight: 12 },
+  
+  // Méta ligne (Tags + Pagination)
+  metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8
+    justifyContent: 'space-between',
+    marginBottom: 8
   },
-  dotsRow: { flexDirection: 'row', gap: 5, alignItems: 'center' },
-  indicatorDot: { height: 4, borderRadius: 2 },
-  indicatorDotActive: { width: 18, backgroundColor: COLORS.primary },
-  indicatorDotInactive: { width: 6, backgroundColor: 'rgba(255,255,255,0.3)' },
-  swipeHintBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 12,
-  },
-  swipeHintText: { color: '#000', fontSize: 10, fontWeight: 'bold' },
-  horizontalPageText: { color: 'rgba(255,255,255,0.7)', fontSize: 11, fontWeight: '600' },
-  tagRow: { flexDirection: 'row', gap: 8, marginBottom: 10, alignItems: 'center' },
+  tagGroup: { flexDirection: 'row', gap: 6, alignItems: 'center' },
   tag: { 
     paddingHorizontal: 8, 
-    paddingVertical: 4, 
+    paddingVertical: 3.5, 
     borderRadius: 6 
   },
   tagText: { fontWeight: 'bold', fontSize: 11, color: '#000' },
   themeTag: { 
     backgroundColor: 'rgba(255, 255, 255, 0.18)', 
     paddingHorizontal: 8, 
-    paddingVertical: 4, 
+    paddingVertical: 3.5, 
     borderRadius: 6,
   },
   themeTagText: { color: '#ffffff', fontSize: 11, fontWeight: '600' },
-  cardTitle: { color: 'white', fontSize: 24, fontWeight: '800', lineHeight: 32, marginBottom: 8 },
-  readMoreHintRow: { flexDirection: 'row', alignItems: 'center', marginTop: 2 },
-  readMoreHint: { color: COLORS.textMuted, fontSize: 12, fontWeight: '500' },
-  cardActions: { justifyContent: 'flex-end', gap: 16, paddingBottom: 10 },
+  
+  horizontalPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
+    gap: 6
+  },
+  dotsRow: { flexDirection: 'row', gap: 4, alignItems: 'center' },
+  indicatorDot: { height: 4, borderRadius: 2 },
+  indicatorDotActive: { width: 14, backgroundColor: COLORS.primary },
+  indicatorDotInactive: { width: 5, backgroundColor: 'rgba(255,255,255,0.3)' },
+  horizontalPillText: { color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 'bold' },
+
+  // Titre & Caption (Instagram Style)
+  cardTitle: { 
+    color: 'white', 
+    fontSize: 20, 
+    fontWeight: '800', 
+    lineHeight: 26, 
+    marginBottom: 6,
+    textShadowColor: 'rgba(0,0,0,0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4
+  },
+  captionTouchable: { marginTop: 2 },
+  cardCaption: { 
+    color: '#e4e4e7', 
+    fontSize: 13.5, 
+    lineHeight: 19.5, 
+    fontWeight: '400',
+    textShadowColor: 'rgba(0,0,0,0.9)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3
+  },
+  readMoreInline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4
+  },
+  readMoreInlineText: {
+    color: COLORS.primary,
+    fontSize: 13,
+    fontWeight: '700'
+  },
+
+  // Action Rail
+  cardActions: { justifyContent: 'flex-end', gap: 14, paddingBottom: 6 },
   actionBtn: { alignItems: 'center' },
   actionIconCircle: { 
-    width: 48, 
-    height: 48, 
-    borderRadius: 24, 
-    backgroundColor: 'rgba(0, 0, 0, 0.55)', 
+    width: 46, 
+    height: 46, 
+    borderRadius: 23, 
+    backgroundColor: 'rgba(10, 10, 12, 0.65)', 
     justifyContent: 'center', 
     alignItems: 'center', 
     borderWidth: 1, 
     borderColor: 'rgba(255, 255, 255, 0.18)' 
   },
-  actionText: { color: 'white', fontSize: 11, marginTop: 4, fontWeight: '600' },
+  actionText: { color: 'white', fontSize: 11, marginTop: 3, fontWeight: '600' },
   heartOverlay: { ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center', zIndex: 10, pointerEvents: 'none' },
 
   // Detail Modal
   modalOverlay: { flex: 1, backgroundColor: COLORS.overlay, justifyContent: 'flex-end' },
   modalContent: { 
-    height: '84%', 
+    height: '86%', 
     backgroundColor: '#121214', 
     borderTopLeftRadius: 24, 
     borderTopRightRadius: 24, 
-    padding: 24,
+    padding: 22,
     borderWidth: 1,
     borderColor: '#27272a'
   },
-  dragIndicator: { width: 36, height: 4, backgroundColor: '#3f3f46', borderRadius: 2, alignSelf: 'center', marginBottom: 18 },
-  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 },
+  dragIndicator: { width: 36, height: 4, backgroundColor: '#3f3f46', borderRadius: 2, alignSelf: 'center', marginBottom: 16 },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 },
   modalCat: { fontWeight: 'bold', fontSize: 12 },
   modalAuthor: { color: COLORS.textMuted, fontSize: 12, marginTop: 2 },
-  closeRoundBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#27272a', justifyContent: 'center', alignItems: 'center' },
-  modalTitle: { fontSize: 22, fontWeight: 'bold', color: '#ffffff', lineHeight: 28, marginBottom: 14 },
-  sep: { width: 35, height: 3, borderRadius: 2, marginBottom: 16 },
-  modalText: { fontSize: 17, lineHeight: 27, color: '#d4d4d8' },
-  modalImageWrapper: { marginTop: 20, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: '#27272a' },
-  modalImage: { width: '100%', height: 240, backgroundColor: '#18181b' },
-  modalFooterActions: { marginTop: 24, alignItems: 'center' },
+  closeRoundBtn: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#27272a', justifyContent: 'center', alignItems: 'center' },
+  modalTitle: { fontSize: 22, fontWeight: '800', color: '#ffffff', lineHeight: 28, marginBottom: 14 },
+  
+  modalLeadBox: {
+    backgroundColor: '#18181b',
+    borderLeftWidth: 3.5,
+    padding: 14,
+    borderRadius: 10,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#27272a'
+  },
+  modalLeadText: { fontSize: 15, lineHeight: 23, color: '#f4f4f5', fontWeight: '500' },
+  sep: { width: 40, height: 3, borderRadius: 2, marginBottom: 16 },
+  deepDiveSection: { marginBottom: 16 },
+  modalDeepDiveHeader: { color: '#ffffff', fontSize: 16, fontWeight: '700' },
+  modalText: { fontSize: 15.5, lineHeight: 25, color: '#d4d4d8' },
+  modalImageWrapper: { marginTop: 16, borderRadius: 14, overflow: 'hidden', borderWidth: 1, borderColor: '#27272a' },
+  modalImage: { width: '100%', height: 230, backgroundColor: '#18181b' },
+  modalFooterActions: { marginTop: 22, alignItems: 'center' },
   modalShareAction: { 
     flexDirection: 'row', 
     alignItems: 'center', 
