@@ -39,107 +39,107 @@ export interface PublicUser {
 
 export const MOCK_CARDS: CardItem[] = [
   {
-    id: 'c1',
-    theme_id: 't_antiquity',
-    short_text: 'La Grande Pyramide de Gizeh était à l origine blanche et étincelante',
-    long_text: 'Construite vers 2560 av. J.-C. pour Khéops, la pyramide était recouverte d un parement de calcaire blanc poli reflétant le soleil comme un phare géant.\n\nCe calcaire blanc de Tourah a été extrait de l autre côté du Nil et taillé avec une précision microscopique. Au sommet trônait un pyramidion souvent doré qui captait les premiers et derniers rayons du soleil dans tout le désert. La quasi-totalité de ce parement immaculé a été pillée au Moyen Âge, notamment en 1356 après un séisme, pour reconstruire les mosquées et forteresses du Caire.',
+    id: '212e4a8f-a930-4aa9-8bcf-5f7839dd84ec',
+    theme_id: 't_histoire',
+    short_text: 'Cléopâtre a vécu plus près de l iPhone que des Pyramides',
+    long_text: 'Lorsque nous pensons à l Égypte antique, nous associons spontanément les grandes pyramides de Gizeh et la reine Cléopâtre comme appartenant au même monde. Pourtant, Cléopâtre est chronologiquement plus proche de nos smartphones que du pharaon Khéops !\n\nLa Grande Pyramide de Khéops a été achevée vers 2560 avant J.-C. De son côté, Cléopâtre VII Philopator, dernière souveraine lagide d Égypte, est née en 69 avant J.-C. et s est éteinte en 30 avant J.-C. Il s est donc écoulé 2 530 ans entre l érection de la pyramide et le règne de Cléopâtre.\n\nEn revanche, entre la mort de Cléopâtre et la présentation du tout premier iPhone par Steve Jobs en janvier 2007, il ne s est écoulé que 2 037 ans — soit près de cinq siècles de moins !\n\n💡 Le saviez-vous ? À l époque même où vivait Cléopâtre, des historiens et archéologues égyptiens étudiaient déjà les pyramides de Gizeh comme des vestiges mystérieux d une antiquité immémoriale !',
     image_url: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1080&q=80',
     importance_level: 5,
     themes: {
-      id: 't_antiquity',
-      name: 'Antiquité & Empires',
-      categories: { name: 'Histoire', color: '#f59e0b' }
+      id: 't_histoire',
+      name: 'Histoire',
+      categories: { name: 'Savoir', color: '#f59e0b' }
     }
   },
   {
-    id: 'c2',
-    theme_id: 't_antiquity',
-    short_text: 'Jules César a exigé de ses ravisseurs pirates qu ils doublent sa rançon',
-    long_text: 'En 75 av. J.-C., des pirates réclament 20 talents d or pour libérer César. Jugeant l offre insultante pour son rang, César rit et leur ordonne d en exiger 50.\n\nPendant ses 38 jours de captivité sur une île de Cilicie, César s est comporté en maître absolu : il leur lisait ses poèmes, les grondait s ils faisaient du bruit pendant sa sieste et leur promettait en riant de les faire tous crucifier. Les pirates le prenaient pour un fou. Une fois la rançon de 50 talents payée et César libéré, il a levé une flotte militaire, a pourchassé les pirates, a récupéré tout l or et a exécuté sa promesse à la lettre.',
-    image_url: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1080&q=80',
+    id: '077b77d7-a30f-452b-a8d9-d619ecc7ed51',
+    theme_id: 't_histoire',
+    short_text: 'Les Samouraïs et le Fax ont coexisté pendant 24 ans',
+    long_text: 'Notre cerveau sépare l Histoire en tiroirs hermétiques : d un côté les samouraïs féodaux au sabre, de l autre la bureautique moderne des années 1980. Pourtant, le télécopieur (fax) a été inventé alors que les samouraïs régnaient encore sur le Japon !\n\nC est en mai 1843 que l horloger et inventeur écossais Alexander Bain dépose le brevet du tout premier « télégraphe d impression chimique », capable de reproduire des écritures et des images à distance via des pendules synchronisés et des fils télégraphiques.\n\nAu même moment, le Japon vivait toujours sous le shogunat féodal Tokugawa, où les samouraïs formaient l élite militaire officielle. La caste des samouraïs n a été abolie qu en 1867 avec l avènement de l ère Meiji.\n\n💡 Le saviez-vous ? En 1863, une ambassade de samouraïs japonais en armure et katanas a même posé en photo officielle devant le Sphinx et les Pyramides d Égypte lors d une mission diplomatique vers l Europe !',
+    image_url: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1080&q=80',
     importance_level: 4,
     themes: {
-      id: 't_antiquity',
-      name: 'Antiquité & Empires',
-      categories: { name: 'Histoire', color: '#f59e0b' }
+      id: 't_histoire',
+      name: 'Histoire',
+      categories: { name: 'Savoir', color: '#f59e0b' }
     }
   },
   {
-    id: 'c3',
-    theme_id: 't_astro',
-    short_text: 'Le temps s écoule plus lentement près d un trou noir supermassif',
-    long_text: 'Selon la relativité générale d Einstein, la gravitation courbe l espace-temps : plus le champ gravitationnel est puissant, plus le temps s écoule lentement.\n\nCe phénomène n est pas une illusion d optique mais une réalité physique mesurée. À proximité immédiate de l horizon des événements d un trou noir comme Gargantua, 1 heure passée sur une planète orbitale peut équivaloir à 7 ans pour un observateur resté au loin. Si vous regardiez quelqu un tomber dans un trou noir, vous le verriez ralentir indéfiniment jusqu à se figer pour l éternité à la frontière.',
-    image_url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1080&q=80',
+    id: '40e367ce-7b2d-4dde-a9d7-525c1927866d',
+    theme_id: 't_science',
+    short_text: 'Le Miel : Le seul aliment sur Terre qui ne périme jamais',
+    long_text: 'Des archéologues ont découvert dans des tombeaux égyptiens vieux de plus de 3 300 ans des jarres de miel scellées encore parfaitement intactes et comestibles. Contrairement à tous les autres aliments naturels, le miel échappe totalement à la putréfaction.\n\nCe prodige repose sur une alchimie biologique fascinante. Premièrement, le miel est hygroscopique : il ne contient qu environ 17 % d eau, ce qui déshydrate et asphyxie instantanément les bactéries ou champignons par osmose. Deuxièmement, son pH très acide (entre 3,2 et 4,5) empêche toute prolifération microbienne.\n\nEn prime, lors de la fabrication du nectar, les abeilles régurgitent une enzyme spécifique appelée glucose oxydase qui libère en permanence d infimes quantités de peroxyde d hydrogène antiseptique.\n\n💡 Le saviez-vous ? Dans l Antiquité, les Égyptiens et les Babyloniens utilisaient le miel non seulement sur les plaies de guerre comme antibiotique, mais aussi pour embaumer les corps des grands souverains, dont Alexandre le Grand !',
+    image_url: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1080&q=80',
     importance_level: 5,
     themes: {
-      id: 't_astro',
-      name: 'Astrophysique',
-      categories: { name: 'Sciences', color: '#38bdf8' }
+      id: 't_science',
+      name: 'Science',
+      categories: { name: 'Savoir', color: '#38bdf8' }
     }
   },
   {
-    id: 'c4',
-    theme_id: 't_astro',
-    short_text: 'Toutes les étoiles visibles la nuit à l œil nu font partie de la Voie Lactée',
-    long_text: 'Chaque point lumineux que vous observez sans télescope dans le ciel nocturne appartient exclusivement à notre propre galaxie.\n\nLa Voie Lactée compte entre 100 et 400 milliards d étoiles, mais à l œil nu, nous n en apercevons que 6 000 à 9 000 dans les meilleures conditions nocturnes, toutes situées dans notre banlieue cosmique immédiate (moins de 1 000 années-lumière). La seule exception visible sans instrument dans l hémisphère nord est la galaxie d Andromède, qui apparaît comme une très faible nébulosité à 2,5 millions d années-lumière.',
-    image_url: 'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=1080&q=80',
+    id: 'e9ad2831-cc90-4879-a3c6-b93779e7fa7c',
+    theme_id: 't_science',
+    short_text: 'Sur Jupiter et Saturne, il pleut des tonnes de diamants',
+    long_text: 'Sur Terre, les nuages déversent de l eau liquide. Mais sur les géantes gazeuses Saturne et Jupiter, la météorologie planétaire transforme le ciel en une véritable mine de pierres précieuses : il y pleut plus de 1 000 tonnes de diamants par an.\n\nDans la haute atmosphère de ces planètes, des tempêtes titanesques produisent des éclairs 10 000 fois plus puissants que sur Terre. Ces décharges électriques brisent les molécules de méthane (CH4) et libèrent d immenses nuages de suie de carbone pur.\n\nEn s enfonçant sur des milliers de kilomètres vers l intérieur de la planète, cette suie subit une pression atmosphérique écrasante et cristallise en diamants solides étincelants.\n\n💡 Le saviez-vous ? À plus de 30 000 km de profondeur, la température dépasse 8 000 °C : ces grêlons de diamant finissent par fondre pour former un océan souterrain de diamant liquide !',
+    image_url: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1080&q=80',
     importance_level: 4,
     themes: {
-      id: 't_astro',
-      name: 'Astrophysique',
-      categories: { name: 'Sciences', color: '#38bdf8' }
+      id: 't_science',
+      name: 'Science',
+      categories: { name: 'Savoir', color: '#38bdf8' }
     }
   },
   {
-    id: 'c5',
+    id: '74f5b1dd-0c98-4120-bc3c-cdb08810a8f5',
     theme_id: 't_art',
-    short_text: 'La Joconde : Le mystère des sourcils invisibles',
-    long_text: 'Regardez attentivement le visage de Mona Lisa : elle n a ni sourcils ni cils. Longtemps attribué à une mode de la Renaissance, une découverte scientifique a tout bouleversé.\n\nEn 2007, l ingénieur français Pascal Cotte a analysé le tableau avec un scanner multispectral de 240 mégapixels. Révélation stupéfiante : Léonard de Vinci avait initialement peint des sourcils et des cils ultra-fins ! Au fil de 500 ans de nettoyages successifs et d oxydation des vernis par des restaurateurs du passé, ces pigments délicats ont été dissous. Son regard énigmatique actuel est en réalité un fascinant accident de l Histoire de l art.',
+    short_text: 'La Joconde : Le vrai mystère de ses sourcils disparus',
+    long_text: 'Si vous observez de près le visage de Mona Lisa au musée du Louvre, un détail frappant saute aux yeux : elle ne possède ni sourcils ni cils visibles. Pendant des décennies, les historiens ont cru à une mode esthétique des femmes nobles de la Renaissance florentine.\n\nEn 2007, l ingénieur français Pascal Cotte a bouleversé cette théorie après 3 000 heures d analyse grâce à une caméra multispectrale de 240 mégapixels utilisant 13 longueurs d onde lumineuses.\n\nEn décomposant virtuellement les couches de vernis, il a découvert la trace indéniable d un coup de pinceau ultra-fin au-dessus de l œil gauche : Léonard de Vinci avait bel et bien peint des sourcils et des cils ! Ceux-ci ont été accidentellement dissous au fil de 500 ans de nettoyages chimiques.\n\n💡 Le saviez-vous ? Le scanner a aussi révélé que les doigts de la main droite de Mona Lisa tenaient initialement une couverture sur ses genoux, dont les pigments se sont totalement estompés avec les siècles.',
     image_url: 'https://images.unsplash.com/photo-1577720643272-265f09367456?w=1080&q=80',
     importance_level: 5,
     themes: {
       id: 't_art',
-      name: 'Chefs-d œuvre',
-      categories: { name: 'Arts & Culture', color: '#ec4899' }
+      name: 'Art',
+      categories: { name: 'Savoir', color: '#ec4899' }
     }
   },
   {
-    id: 'c6',
+    id: '9d9a5139-2008-4f4a-b65f-782e190f2733',
     theme_id: 't_art',
-    short_text: 'Van Gogh a peint "La Nuit Étoilée" depuis la fenêtre de son asile',
-    long_text: 'Enfermée au monastère Saint-Paul-de-Mausole en 1889 à Saint-Rémy-de-Provence, Van Gogh a peint cette œuvre mythique juste avant l aube.\n\nPrivé de sortie nocturne, l artiste a recomposé la vue de mémoire en y ajoutant le clocher typique de son village d enfance aux Pays-Bas. Le cyprès au premier plan, traditionnellement planté dans les cimetières méditerranéens, symbolise le deuil et le pont entre la Terre et l infinité des étoiles. Les tourbillons célestes correspondent étrangement aux équations de turbulence mathématique formulées par Kolmogorov 50 ans plus tard !',
+    short_text: 'Van Gogh n a vendu qu une seule toile de son vivant',
+    long_text: 'Aujourd hui, le moindre tableau de Vincent van Gogh s arrache à plus de 100 millions d euros dans les ventes aux enchères. Pourtant, le maître néerlandais a vécu dans la misère et l incompréhension, ne vendant officiellement qu une unique peinture avant sa mort.\n\nEn seulement dix ans de carrière frénétique, Van Gogh a produit près de 900 toiles et plus de 1 100 dessins. Malgré le soutien financier et moral incessant de son frère cadet Théo, les critiques de l époque jugeaient son coup de pinceau trop brutal.\n\nLa seule toile vendue de son vivant avec certitude est La Vigne rouge à Montmajour, achetée en février 1890 à Bruxelles par l artiste belge Anna Boch pour 400 francs.\n\n💡 Le saviez-vous ? C est Johanna van Gogh-Bonger, la jeune veuve de son frère Théo, qui a consacré sa vie à publier la correspondance des deux frères et à organiser plus de 100 expositions qui ont fait de Van Gogh une légende mondiale.',
     image_url: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1080&q=80',
     importance_level: 4,
     themes: {
       id: 't_art',
-      name: 'Chefs-d œuvre',
-      categories: { name: 'Arts & Culture', color: '#ec4899' }
+      name: 'Art',
+      categories: { name: 'Savoir', color: '#ec4899' }
     }
   },
   {
-    id: 'c7',
+    id: 'e208f3d3-2db3-4e54-ae4c-589d1a0f7666',
     theme_id: 't_tech',
-    short_text: 'Le premier programmeur de l Histoire était une femme : Ada Lovelace',
-    long_text: 'Dès 1843, Ada Lovelace conçoit le tout premier algorithme au monde destiné à être exécuté par une machine mécanique.\n\nFille du poète Lord Byron, passionnée de mathématiques, elle a collaboré avec Charles Babbage sur la Machine Analytique. Dans ses notes célèbres, elle a décrit comment calculer les nombres de Bernoulli avec des cartes perforées. Surtout, elle a été la première visionnaire à prédire que les calculateurs manipuleraient un jour bien plus que des chiffres : des notes de musique, du texte et des images.',
+    short_text: 'Le premier « Bug » informatique était un vrai papillon de nuit',
+    long_text: 'Aujourd hui, le mot « bug » désigne la moindre erreur de code dans une application ou un jeu vidéo. Mais le 9 septembre 1947 à 15h45, les ingénieurs de l université Harvard ont littéralement sorti un insecte mort des entrailles de leur ordinateur.\n\nL équipe dirigée par la mathématicienne et pionnière de l informatique Grace Hopper travaillait sur le Harvard Mark II, un colosse électromécanique de 23 tonnes occupant une salle entière.\n\nEn cherchant pourquoi un calcul trigonométrique renvoyait des résultats faux, un opérateur a inspecté le relais n° 70 du panneau F : une grosse mite attirée par la chaleur s était fait électrocuter entre les contacts métalliques.\n\n💡 Le saviez-vous ? Pour réparer la machine en retirant l insecte, l équipe a parlé de « déboguer » (debugging) l ordinateur, popularisant à jamais ce terme dans le vocabulaire mondial de la tech !',
     image_url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1080&q=80',
     importance_level: 5,
     themes: {
       id: 't_tech',
-      name: 'Pionniers Tech',
-      categories: { name: 'Technologie', color: '#4ade80' }
+      name: 'Tech',
+      categories: { name: 'Savoir', color: '#4ade80' }
     }
   },
   {
-    id: 'c8',
-    theme_id: 't_philo',
-    short_text: 'L allégorie de la Caverne de Platon illustre notre illusion du réel',
-    long_text: 'Des prisonniers enchaînés dans une caverne depuis leur enfance ne voient que des ombres projetées sur le mur et les prennent pour l unique réalité.\n\nPlaton explique que la condition humaine ordinaire ressemble à ces captifs : nous confondons les apparences matérielles avec la vérité. Si un prisonnier est libéré et sort à la lumière éblouissante du Soleil (la Vérité intelligible), ses yeux souffrent avant de contempler la vraie nature des choses. Le devoir suprême du philosophe est de retourner dans la caverne pour aider les autres, même au risque d être moqué ou rejeté.',
-    image_url: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1080&q=80',
+    id: 'c424f1fe-81f7-480a-b987-54b50c3efd52',
+    theme_id: 't_nature',
+    short_text: 'La Pieuvre possède 3 Cœurs, 9 Cerveaux et du Sang bleu',
+    long_text: 'Avec sa biologie hors norme, la pieuvre est souvent comparée à ce qui se rapproche le plus d une intelligence extraterrestre sur Terre. Son système circulatoire et nerveux ne ressemble à aucun vertébré terrestre.\n\nPour survivre dans les profondeurs froides et pauvres en oxygène, son sang n utilise pas l hémoglobine à base de fer, mais l hémocyanine, une protéine riche en cuivre qui donne à son sang une teinte bleu cobalt électrique.\n\nCe sang bleu est propulsé par trois cœurs distincts : deux cœurs branchiaux pompent le sang vers les branchies, tandis qu un cœur systémique central l envoie au reste du corps.\n\n💡 Le saviez-vous ? Lorsque la pieuvre nage à grande vitesse par propulsion, son cœur principal s arrête complètement de battre, ce qui l épuise vite et explique pourquoi elle préfère marcher au fond de l eau.',
+    image_url: 'https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=1080&q=80',
     importance_level: 5,
     themes: {
-      id: 't_philo',
-      name: 'Philosophie Antique',
-      categories: { name: 'Philosophie', color: '#a855f7' }
+      id: 't_nature',
+      name: 'Nature',
+      categories: { name: 'Insolite', color: '#10b981' }
     }
   }
 ];
@@ -147,94 +147,127 @@ export const MOCK_CARDS: CardItem[] = [
 export const MOCK_QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 'q1',
-    card_id: 'c1',
-    question: 'De quelle couleur était initialement la Grande Pyramide de Gizeh ?',
-    option_a: 'Or massif poli',
-    option_b: 'Blanc éclatant étincelant',
-    option_c: 'Rouge ocre du Nil',
-    option_d: 'Granit noir poli',
+    card_id: '212e4a8f-a930-4aa9-8bcf-5f7839dd84ec',
+    question: 'De quel événement historique Cléopâtre est-elle chronologiquement la plus proche ?',
+    option_a: 'La construction des Pyramides',
+    option_b: 'La sortie du premier iPhone',
+    option_c: 'L extinction des Dinosaures',
+    option_d: 'La Guerre de Troie',
     correct_option: 'B',
-    explanation: 'Elle était recouverte d un calcaire blanc de Tourah si poli qu il reflétait le soleil à des kilomètres !',
+    explanation: 'La Grande Pyramide date de 2560 av. J.-C. (2 530 ans avant Cléopâtre), alors que l iPhone (2007) n est séparé du règne de Cléopâtre que de 2 037 ans !',
     cards: MOCK_CARDS[0]
   },
   {
     id: 'q2',
-    card_id: 'c3',
-    question: 'Que se passe-t-il pour le temps près d un trou noir supermassif ?',
-    option_a: 'Il s accélère considérablement',
-    option_b: 'Il s inverse dans le passé',
-    option_c: 'Il ralentit (dilatation temporelle)',
-    option_d: 'Il se fige à tout jamais',
+    card_id: '077b77d7-a30f-452b-a8d9-d619ecc7ed51',
+    question: 'Quelle technologie de bureau les Samouraïs ont-ils pu connaître de leur vivant ?',
+    option_a: 'Internet',
+    option_b: 'La Télévision couleur',
+    option_c: 'Le Fax (Télécopieur)',
+    option_d: 'Le Téléphone portable',
     correct_option: 'C',
-    explanation: 'La gravitation extrême courbe l espace-temps : plus le champ est fort, plus le temps s écoule lentement.',
-    cards: MOCK_CARDS[2]
+    explanation: 'Alexander Bain a breveté le premier télécopieur électrique en 1843, tandis que la caste des samouraïs n a été abolie qu en 1867 au Japon.',
+    cards: MOCK_CARDS[1]
   },
   {
     id: 'q3',
-    card_id: 'c5',
-    question: 'Quel détail manque étrangement sur le visage de La Joconde ?',
+    card_id: '74f5b1dd-0c98-4120-bc3c-cdb08810a8f5',
+    question: 'Quel détail manque à l œil nu sur le visage de La Joconde ?',
     option_a: 'Ses cils et ses sourcils',
     option_b: 'Le lobe de son oreille',
     option_c: 'Ses narines',
     option_d: 'Son menton',
     correct_option: 'A',
-    explanation: 'Des analyses infrarouges ont montré qu ils existaient à l origine mais ont disparu avec les vernis et nettoyages anciens.',
+    explanation: 'En 2007, un scanner de 240 mégapixels a prouvé que De Vinci avait peint des sourcils très fins, mais qu ils ont été effacés par les nettoyages anciens.',
     cards: MOCK_CARDS[4]
   },
   {
     id: 'q4',
-    card_id: 'c7',
-    question: 'Qui est reconnu(e) comme le tout premier programmeur de l Histoire ?',
-    option_a: 'Alan Turing',
-    option_b: 'Ada Lovelace',
-    option_c: 'Grace Hopper',
-    option_d: 'Nikola Tesla',
+    card_id: 'e208f3d3-2db3-4e54-ae4c-589d1a0f7666',
+    question: 'Quelle est l origine réelle du mot « Bug » en informatique ?',
+    option_a: 'Une panne électrique à la NASA',
+    option_b: 'Un vrai papillon de nuit coincé dans un relais',
+    option_c: 'Le nom d un virus russe',
+    option_d: 'Une faute de frappe d Alan Turing',
     correct_option: 'B',
-    explanation: 'Ada Lovelace a publié en 1843 le premier algorithme destiné à être exécuté par la machine de Babbage.',
+    explanation: 'En 1947, l équipe de Grace Hopper a trouvé une vraie mite coincée dans un relais du calculateur Harvard Mark II et l a scotchée dans le registre.',
     cards: MOCK_CARDS[6]
   },
   {
     id: 'q5',
-    card_id: 'c2',
-    question: 'Face aux pirates qui l avaient capturé, quelle a été la réaction de Jules César ?',
-    option_a: 'Il a supplié en larmes',
-    option_b: 'Il a sauté par-dessus bord',
-    option_c: 'Il a exigé qu ils doublent sa rançon',
-    option_d: 'Il les a défiés aux échecs',
+    card_id: 'c424f1fe-81f7-480a-b987-54b50c3efd52',
+    question: 'Combien de cœurs possède une pieuvre pour propulser son sang bleu ?',
+    option_a: '1 seul cœur géant',
+    option_b: '2 cœurs',
+    option_c: '3 cœurs distincts',
+    option_d: '8 cœurs (un par tentacule)',
     correct_option: 'C',
-    explanation: 'Trouvant le prix de 20 talents insultant pour sa grandeur, il a exigé qu ils demandent 50 talents d or !',
-    cards: MOCK_CARDS[1]
+    explanation: 'Deux cœurs pompent son sang bleu (riche en cuivre) vers ses branchies, et un troisième cœur central l envoie dans le reste du corps.',
+    cards: MOCK_CARDS[7]
   }
 ];
 
 export const MOCK_LEADERBOARD = [
-  { user_pseudo: 'Sophie_Culture', score: 5, streak: 8, finished_at: new Date().toISOString() },
+  { user_pseudo: 'SuperSophie', score: 5, streak: 8, finished_at: new Date(Date.now() - 1800000).toISOString() },
   { user_pseudo: 'Alexandre_Dev', score: 4, streak: 5, finished_at: new Date(Date.now() - 3600000).toISOString() },
-  { user_pseudo: 'Camille_Astro', score: 4, streak: 2, finished_at: new Date(Date.now() - 7200000).toISOString() },
-  { user_pseudo: 'Thomas_Histoire', score: 3, streak: 0, finished_at: new Date(Date.now() - 10800000).toISOString() }
+  { user_pseudo: 'Camille_Astro', score: 4, streak: 3, finished_at: new Date(Date.now() - 7200000).toISOString() },
+  { user_pseudo: 'Titou', score: 3, streak: 2, finished_at: new Date(Date.now() - 10800000).toISOString() }
 ];
 
 export const MOCK_FRIENDS = [
-  { following_pseudo: 'Sophie_Culture', avatar: '👩‍🎨', bio: 'Curieuse insatiable' },
-  { following_pseudo: 'Alexandre_Dev', avatar: '💻', bio: 'Tech & Philosophie' },
-  { following_pseudo: 'Camille_Astro', avatar: '🔭', bio: 'La tête dans les étoiles' }
+  { following_pseudo: 'SuperSophie', avatar: '👩‍🎨', bio: 'Curieuse insatiable • Art & Histoire' },
+  { following_pseudo: 'Alexandre_Dev', avatar: '💻', bio: 'Passionné Tech & Cybersécurité' },
+  { following_pseudo: 'Camille_Astro', avatar: '🔭', bio: 'La tête dans les étoiles ✨' },
+  { following_pseudo: 'Titou', avatar: '🌿', bio: 'Nature & Anecdotes insolites' }
 ];
 
 export const MOCK_MESSAGES: Record<string, Array<{ id: string; sender_pseudo: string; content?: string; shared_card_id?: string; cards?: CardItem; created_at: string }>> = {
-  'Sophie_Culture': [
+  'SuperSophie': [
     {
       id: 'm1',
-      sender_pseudo: 'Sophie_Culture',
-      content: 'Salut Victor ! Tu as vu la fiche sur la Pyramide de Gizeh ? 🔥',
-      shared_card_id: 'c1',
+      sender_pseudo: 'SuperSophie',
+      content: 'Salut Victor ! Tu as vu cette anecdote sur Cléopâtre et l iPhone ? C est fou 🤯',
+      shared_card_id: '212e4a8f-a930-4aa9-8bcf-5f7839dd84ec',
       cards: MOCK_CARDS[0],
       created_at: new Date(Date.now() - 3600000).toISOString()
     },
     {
       id: 'm2',
       sender_pseudo: 'Victor',
-      content: 'Carrément ! Le calcaire blanc poli devait être splendide sous le soleil !',
+      content: 'Grave ! Et regarde celle sur la Joconde et le scanner 240 mégapixels 🔥',
+      shared_card_id: '74f5b1dd-0c98-4120-bc3c-cdb08810a8f5',
+      cards: MOCK_CARDS[4],
       created_at: new Date(Date.now() - 1800000).toISOString()
+    }
+  ],
+  'Alexandre_Dev': [
+    {
+      id: 'm3',
+      sender_pseudo: 'Alexandre_Dev',
+      content: 'Le premier bug informatique qui était un vrai papillon de nuit, un classique ! 💻',
+      shared_card_id: 'e208f3d3-2db3-4e54-ae4c-589d1a0f7666',
+      cards: MOCK_CARDS[6],
+      created_at: new Date(Date.now() - 5400000).toISOString()
+    }
+  ],
+  'Camille_Astro': [
+    {
+      id: 'm4',
+      sender_pseudo: 'Camille_Astro',
+      content: 'Il pleut littéralement des tonnes de diamants sur Saturne, on part quand ? ✨🪐',
+      shared_card_id: 'e9ad2831-cc90-4879-a3c6-b93779e7fa7c',
+      cards: MOCK_CARDS[3],
+      created_at: new Date(Date.now() - 7200000).toISOString()
+    }
+  ],
+  'Titou': [
+    {
+      id: 'm5',
+      sender_pseudo: 'Titou',
+      content: 'La pieuvre a 3 cœurs et 9 cerveaux, c est clairement un alien 🐙',
+      shared_card_id: 'c424f1fe-81f7-480a-b987-54b50c3efd52',
+      cards: MOCK_CARDS[7],
+      created_at: new Date(Date.now() - 9000000).toISOString()
     }
   ]
 };
