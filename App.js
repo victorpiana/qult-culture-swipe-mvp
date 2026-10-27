@@ -43,12 +43,81 @@ const STORAGE_KEYS = {
 
 const CATEGORIES_FILTER = [
   { id: 'all', label: 'Pour toi', emoji: '✨' },
+  { id: 'dossiers', label: 'Dossiers Liés ↔', emoji: '📚' },
   { id: 'Histoire', label: 'Histoire', emoji: '🏛️' },
   { id: 'Science', label: 'Science', emoji: '⚛️' },
+  { id: 'Psycho', label: 'Psycho & Philo', emoji: '🧠' },
   { id: 'Art', label: 'Art', emoji: '🎨' },
   { id: 'Nature', label: 'Nature', emoji: '🌿' },
   { id: 'Tech', label: 'Tech', emoji: '💻' },
   { id: 'saved', label: 'Mes Acquis', emoji: '📌' },
+];
+
+// Dossiers Spéciaux Exceptionnels (seules fiches où le swipe horizontal à droite est activé car les sujets sont intimement liés)
+const LINKED_DOSSIERS = [
+  {
+    id: 'dossier_egypte',
+    title: "Secrets des Pharaons & Pyramides",
+    cardIds: [
+      '212e4a8f-a930-4aa9-8bcf-5f7839dd84ec', // Cléopâtre & l'iPhone
+      '40e367ce-7b2d-4dde-a9d7-525c1927866d', // Le Miel Immortel des Pharaons
+      '10000000-0000-4000-8000-000000000001', // La Grande Pyramide blanche et or
+    ]
+  },
+  {
+    id: 'dossier_espace',
+    title: "Guerre Froide & Conquête Spatiale",
+    cardIds: [
+      'f00d9a60-7fd5-4e6a-8187-56e3dc1d809f', // Code nucléaire 00000000
+      '10000000-0000-4000-8000-000000000002', // Le mythe du stylo spatial NASA
+      '10000000-0000-4000-8000-000000000003', // Le Disque d'Or de Voyager 1
+    ]
+  },
+  {
+    id: 'dossier_vivant',
+    title: "Créatures aux Super-Pouvoirs",
+    cardIds: [
+      'c424f1fe-81f7-480a-b987-54b50c3efd52', // La Pieuvre à 3 cœurs et 9 cerveaux
+      '10000000-0000-4000-8000-000000000004', // Le Tardigrade indestructible
+      '10000000-0000-4000-8000-000000000005', // La Méduse biologiquement immortelle
+    ]
+  },
+  {
+    id: 'dossier_art',
+    title: "Messages Cachés des Chefs-d'Œuvre",
+    cardIds: [
+      '74f5b1dd-0c98-4120-bc3c-cdb08810a8f5', // La Joconde et ses sourcils disparus
+      '10000000-0000-4000-8000-000000000006', // Michel-Ange et le cerveau caché
+      '9d9a5139-2008-4f4a-b65f-782e190f2733', // Van Gogh et son unique toile vendue
+    ]
+  },
+  {
+    id: 'dossier_tech',
+    title: "Origines Improbables de la Tech",
+    cardIds: [
+      '2b0931d2-de5c-46f2-81c1-304e1e61baaa', // Nintendo en 1889
+      'e208f3d3-2db3-4e54-ae4c-589d1a0f7666', // Le premier Bug informatique (1947)
+      '10000000-0000-4000-8000-000000000007', // Hedy Lamarr et l'ancêtre du Wi-Fi
+    ]
+  },
+  {
+    id: 'dossier_cerveau',
+    title: "Illusions & Pièges de ton Cerveau",
+    cardIds: [
+      '10000000-0000-4000-8000-000000000008', // L'Effet Mandela
+      '10000000-0000-4000-8000-000000000009', // Le Biais du Survivant (1943)
+      '10000000-0000-4000-8000-000000000010', // Le Bateau de Thésée
+    ]
+  },
+  {
+    id: 'dossier_cosmos',
+    title: "Phénomènes Extrêmes du Cosmos",
+    cardIds: [
+      'e9ad2831-cc90-4879-a3c6-b93779e7fa7c', // Pluie de diamants sur Jupiter & Saturne
+      '10000000-0000-4000-8000-000000000011', // Sur Vénus, un jour est plus long qu'un an
+      '10000000-0000-4000-8000-000000000012', // L'étoile à neutrons (1 cuillère = l'Everest)
+    ]
+  }
 ];
 
 const FRIEND_META_MAP = {
@@ -106,7 +175,15 @@ const seededShuffle = (array, extraSeed = 0) => {
 
 // Extraction intelligente du thème et de la catégorie d'une carte
 const getCardThemeAndCategory = (card) => {
-  const themeName = card?.themes?.name || 'Culture';
+  const THEME_FALLBACK_MAP = {
+    '89834155-aea4-490e-a2e6-60d026043f15': 'Histoire',
+    'bb3c4d49-e69d-4d57-957f-7423ab3e0409': 'Science',
+    '4a417df5-d91e-4432-907c-eed498ca80c5': 'Art',
+    'd610c3a7-4dff-4126-a988-32f5f09c59a5': 'Nature',
+    '2991ee62-0c8f-41b5-8d18-f8f843d88537': 'Tech',
+    'a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d': 'Psycho & Philo',
+  };
+  const themeName = card?.themes?.name || THEME_FALLBACK_MAP[card?.theme_id] || 'Culture';
   const catName = card?.themes?.categories?.name || 'Savoir';
   // Si categories.name est générique ("Savoir" / "Insolite"), le vrai domaine est dans themes.name ("Histoire", "Art", etc.)
   const primaryTopic = ['Savoir', 'Insolite'].includes(catName) ? themeName : catName;
@@ -195,9 +272,9 @@ const getCategoryMeta = (topicName) => {
       gradient: ['#042618', '#02130c', '#000000']
     };
   }
-  if (norm.includes('philo')) {
+  if (norm.includes('philo') || norm.includes('psy')) {
     return {
-      emoji: '📜',
+      emoji: '🧠',
       color: '#a855f7',
       bgTint: 'rgba(168, 85, 247, 0.16)',
       gradient: ['#1f0833', '#0e0318', '#000000']
@@ -774,6 +851,8 @@ const CardFull = memo(({
   card, 
   currentIndex = 0, 
   totalCards = 1, 
+  dossierTitle = null,
+  nextCardTitle = null,
   isLiked, 
   isMemorized, 
   onLike, 
@@ -862,8 +941,31 @@ const CardFull = memo(({
           >
             {/* Contenu textuel type Post Instagram enrichi */}
             <View style={styles.cardContent}>
+
+              {/* Bandeau Exceptionnel "DOSSIER LIÉ" affiché UNIQUEMENT quand plusieurs fiches sont intimement liées */}
+              {totalCards > 1 && (
+                <View style={styles.dossierBanner}>
+                  <View style={styles.dossierBannerLeft}>
+                    <Text style={{ fontSize: 12 }}>📚</Text>
+                    <Text style={styles.dossierBannerTitle} numberOfLines={1}>
+                      DOSSIER LIÉ ({currentIndex + 1}/{totalCards}) • {dossierTitle || 'Série Spéciale'}
+                    </Text>
+                  </View>
+                  <View style={styles.dotsRow}>
+                    {Array.from({ length: totalCards }).map((_, i) => (
+                      <View 
+                        key={i} 
+                        style={[
+                          styles.indicatorDot, 
+                          i === currentIndex ? styles.indicatorDotActive : styles.indicatorDotInactive
+                        ]} 
+                      />
+                    ))}
+                  </View>
+                </View>
+              )}
               
-              {/* Ligne Méta : Badge Thème coloré + Sous-catégorie + Pagination 2D */}
+              {/* Ligne Méta : Badge Thème coloré + Sous-catégorie */}
               <View style={styles.metaRow}>
                 <View style={styles.tagGroup}>
                   <View style={[styles.tag, { backgroundColor: meta.color }]}>
@@ -873,23 +975,6 @@ const CardFull = memo(({
                     <Text style={styles.themeTagText}>{secondaryLabel}</Text>
                   </View>
                 </View>
-
-                {totalCards > 1 && (
-                  <View style={styles.horizontalPill}>
-                    <View style={styles.dotsRow}>
-                      {Array.from({ length: totalCards }).map((_, i) => (
-                        <View 
-                          key={i} 
-                          style={[
-                            styles.indicatorDot, 
-                            i === currentIndex ? styles.indicatorDotActive : styles.indicatorDotInactive
-                          ]} 
-                        />
-                      ))}
-                    </View>
-                    <Text style={styles.horizontalPillText}>{currentIndex + 1}/{totalCards} ➔</Text>
-                  </View>
-                )}
               </View>
 
               {/* Titre Accrocheur */}
@@ -904,11 +989,21 @@ const CardFull = memo(({
                     {intro}
                   </Text>
                   
-                  {/* Bouton "Lire +" clair qui invite à découvrir l'histoire complète & l'anecdote bonus */}
-                  <View style={styles.readMorePillBtn}>
-                    <Ionicons name="book" size={13} color="#000" />
-                    <Text style={styles.readMorePillText}>Lire + d'infos & Anecdote bonus ({readTimeMin} min)</Text>
-                    <Ionicons name="chevron-forward" size={14} color="#000" />
+                  {/* Boutons d'action bas : "Lire +" et indicateur "Swipe à droite" exceptionnel si Dossier Lié */}
+                  <View style={styles.bottomPillsRow}>
+                    <View style={styles.readMorePillBtn}>
+                      <Ionicons name="book" size={13} color="#000" />
+                      <Text style={styles.readMorePillText}>Lire + & Anecdote ({readTimeMin} min)</Text>
+                      <Ionicons name="chevron-forward" size={14} color="#000" />
+                    </View>
+
+                    {totalCards > 1 && nextCardTitle && (
+                      <View style={styles.swipeRightHintPill}>
+                        <Text style={styles.swipeRightHintText} numberOfLines={1}>
+                          Swipe ➔ Volet {currentIndex + 2}/{totalCards}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 </TouchableOpacity>
               ) : null}
@@ -958,7 +1053,8 @@ const CardFull = memo(({
   prev.isMemorized === next.isMemorized && 
   prev.card.id === next.card.id &&
   prev.currentIndex === next.currentIndex &&
-  prev.totalCards === next.totalCards
+  prev.totalCards === next.totalCards &&
+  prev.dossierTitle === next.dossierTitle
 );
 
 // --- ÉCRANS PRINCIPAUX ---
@@ -1089,7 +1185,7 @@ const AuthScreen = ({ onDemoLogin }) => {
   );
 };
 
-// 2. ÉCRAN FEED DU SAVOIR (SWIPE 2D + FILTRE DE CATÉGORIES)
+// 2. ÉCRAN FEED DU SAVOIR (SCROLL VERTICAL INFINI + DOSSIERS LIÉS EXCEPTIONNELS À DROITE)
 const HomeScreen = ({ 
   allCards, 
   allQuizQuestions,
@@ -1104,34 +1200,125 @@ const HomeScreen = ({
   const [shareVisible, setShareVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [infiniteCycles, setInfiniteCycles] = useState([0, 1]);
   const verticalListRef = useRef(null);
 
-  // Construction intelligente de la matrice 2D :
-  // - Verticalement : toutes les cartes correspondant au filtre (pour un scroll infini riche !)
-  // - Horizontalement : pour chaque carte, glisser à droite permet d'explorer les autres cartes du MÊME thème !
-  const rowsData = useMemo(() => {
+  // Construction intelligente du Feed :
+  // - Par défaut : 100 % scroll vertical pur (aucun scroll horizontal inutile)
+  // - Exceptionnellement : quand une fiche fait partie d'un "Dossier Lié" (2 ou 3 fiches intimement liées),
+  //   le swipe à droite est activé avec un bandeau spécial "📚 DOSSIER LIÉ" !
+  const baseRows = useMemo(() => {
     if (!allCards || allCards.length === 0) return [];
-    let filtered = allCards;
+    const cardById = new Map(allCards.map(c => [c.id, c]));
+
+    // Filtre "Mes Acquis" : cartes sauvegardées en scroll vertical
     if (selectedCategory === 'saved') {
-      filtered = allCards.filter(c => memorizedCards.has(c.id));
-    } else if (selectedCategory !== 'all') {
-      filtered = allCards.filter(c => {
+      return allCards
+        .filter(c => memorizedCards.has(c.id))
+        .map(c => ({ id: c.id, dossierTitle: null, cards: [c] }));
+    }
+
+    // Filtre "📚 Dossiers Liés" : uniquement les séries spéciales à swiper à droite
+    if (selectedCategory === 'dossiers') {
+      return LINKED_DOSSIERS.map(dossier => {
+        const cards = dossier.cardIds.map(id => cardById.get(id)).filter(Boolean);
+        return cards.length > 1 ? { id: dossier.id, dossierTitle: dossier.title, cards } : null;
+      }).filter(Boolean);
+    }
+
+    // Map des Dossiers Liés par carte principale (lead card) et ensemble des cartes secondaires
+    const leadToDossier = new Map();
+    const secondaryDossierCardIds = new Set();
+    for (const dossier of LINKED_DOSSIERS) {
+      const resolved = dossier.cardIds.map(id => cardById.get(id)).filter(Boolean);
+      if (resolved.length > 1) {
+        leadToDossier.set(resolved[0].id, { ...dossier, resolvedCards: resolved });
+        for (let i = 1; i < resolved.length; i++) {
+          secondaryDossierCardIds.add(resolved[i].id);
+        }
+      }
+    }
+
+    let pool = allCards;
+    if (selectedCategory !== 'all') {
+      pool = allCards.filter(c => {
         const { primaryTopic } = getCardThemeAndCategory(c);
         return primaryTopic.toLowerCase().includes(selectedCategory.toLowerCase());
       });
     }
 
-    return filtered.map(primaryCard => {
-      const sameThemeOthers = allCards.filter(
-        c => c.id !== primaryCard.id && c.theme_id && c.theme_id === primaryCard.theme_id
-      );
-      return [primaryCard, ...sameThemeOthers];
-    });
+    const resultRows = [];
+    for (const card of pool) {
+      // En mode "Pour toi", les volets 2 et 3 d'un dossier sont déjà accessibles dans leur Dossier Lié
+      if (selectedCategory === 'all' && secondaryDossierCardIds.has(card.id)) {
+        continue;
+      }
+      const dossier = leadToDossier.get(card.id);
+      if (dossier) {
+        resultRows.push({
+          id: `${dossier.id}_${card.id}`,
+          dossierTitle: dossier.title,
+          cards: dossier.resolvedCards
+        });
+      } else {
+        resultRows.push({
+          id: card.id,
+          dossierTitle: null,
+          cards: [card]
+        });
+      }
+    }
+
+    return resultRows;
   }, [allCards, selectedCategory, memorizedCards]);
+
+  // Génération du flux infini : chaque cycle ajoute une nouvelle vague mélangée intelligemment
+  const rowsData = useMemo(() => {
+    if (baseRows.length === 0) return [];
+    // Pour "Mes Acquis" s'il y a très peu de cartes (< 3), pas besoin de dupliquer à l'infini
+    if (selectedCategory === 'saved' && baseRows.length < 3) {
+      return baseRows.map((r, i) => ({ ...r, uniqueKey: `saved_${r.id}_${i}` }));
+    }
+
+    const infiniteList = [];
+    for (const cycleIndex of infiniteCycles) {
+      const cycleRows = cycleIndex === 0 ? baseRows : seededShuffle(baseRows, cycleIndex * 97 + 13);
+      // Évite que la première carte d'un nouveau cycle soit identique à la dernière carte du cycle précédent
+      if (
+        infiniteList.length > 0 &&
+        cycleRows.length > 1 &&
+        cycleRows[0].id === infiniteList[infiniteList.length - 1].id
+      ) {
+        const swapped = [...cycleRows];
+        [swapped[0], swapped[1]] = [swapped[1], swapped[0]];
+        for (let i = 0; i < swapped.length; i++) {
+          infiniteList.push({
+            ...swapped[i],
+            uniqueKey: `${selectedCategory}_c${cycleIndex}_${i}_${swapped[i].id}`
+          });
+        }
+      } else {
+        for (let i = 0; i < cycleRows.length; i++) {
+          infiniteList.push({
+            ...cycleRows[i],
+            uniqueKey: `${selectedCategory}_c${cycleIndex}_${i}_${cycleRows[i].id}`
+          });
+        }
+      }
+    }
+    return infiniteList;
+  }, [baseRows, infiniteCycles, selectedCategory]);
+
+  const handleLoadMoreInfinite = useCallback(() => {
+    if (baseRows.length === 0) return;
+    if (selectedCategory === 'saved' && baseRows.length < 3) return;
+    setInfiniteCycles(prev => [...prev, prev.length]);
+  }, [baseRows.length, selectedCategory]);
 
   const handleSelectCategory = (catId) => {
     triggerHaptic('light');
     setSelectedCategory(catId);
+    setInfiniteCycles([0, 1]);
     verticalListRef.current?.scrollToOffset({ offset: 0, animated: false });
   };
 
@@ -1140,34 +1327,62 @@ const HomeScreen = ({
     return allQuizQuestions.find(q => q.card_id === selectedCard.id);
   }, [selectedCard, allQuizQuestions]);
   
-  const renderRow = useCallback(({ item: rowCards }) => ( 
-    <View style={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}> 
-      <FlatList 
-        data={rowCards} 
-        horizontal 
-        pagingEnabled={true} 
-        showsHorizontalScrollIndicator={false} 
-        initialNumToRender={2} 
-        maxToRenderPerBatch={2} 
-        windowSize={3} 
-        removeClippedSubviews={false} 
-        keyExtractor={card => card.id} 
-        renderItem={({ item: card, index: cardIndex }) => ( 
+  const renderRow = useCallback(({ item: rowItem }) => {
+    const rowCards = rowItem.cards;
+    // Cas 1 (Majoritaire) : Fiche solo -> aucun FlatList horizontal, scroll vertical 100 % pur et ultra-fluide
+    if (rowCards.length === 1) {
+      const card = rowCards[0];
+      return (
+        <View style={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}>
           <CardFull 
             card={card} 
-            currentIndex={cardIndex}
-            totalCards={rowCards.length}
+            currentIndex={0}
+            totalCards={1}
+            dossierTitle={null}
+            nextCardTitle={null}
             isLiked={likedCards.has(card.id)} 
             isMemorized={memorizedCards.has(card.id)}
             onLike={() => toggleLike(card)} 
             onMemorize={() => toggleMemorize(card)}
             onOpen={() => { setSelectedCard(card); setModalVisible(true); }} 
             onShare={() => { setSelectedCard(card); setShareVisible(true); }}
-          /> 
-        )} 
-      /> 
-    </View> 
-  ), [likedCards, memorizedCards, toggleLike, toggleMemorize]);
+          />
+        </View>
+      );
+    }
+
+    // Cas 2 (Exceptionnel) : Dossier Lié (2 ou 3 volets très liés) -> Swipe horizontal activé avec bandeau spécial
+    return ( 
+      <View style={{ height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}> 
+        <FlatList 
+          data={rowCards} 
+          horizontal 
+          pagingEnabled={true} 
+          showsHorizontalScrollIndicator={false} 
+          initialNumToRender={2} 
+          maxToRenderPerBatch={2} 
+          windowSize={3} 
+          removeClippedSubviews={false} 
+          keyExtractor={card => `${rowItem.uniqueKey}_${card.id}`} 
+          renderItem={({ item: card, index: cardIndex }) => ( 
+            <CardFull 
+              card={card} 
+              currentIndex={cardIndex}
+              totalCards={rowCards.length}
+              dossierTitle={rowItem.dossierTitle}
+              nextCardTitle={rowCards[cardIndex + 1]?.short_text || null}
+              isLiked={likedCards.has(card.id)} 
+              isMemorized={memorizedCards.has(card.id)}
+              onLike={() => toggleLike(card)} 
+              onMemorize={() => toggleMemorize(card)}
+              onOpen={() => { setSelectedCard(card); setModalVisible(true); }} 
+              onShare={() => { setSelectedCard(card); setShareVisible(true); }}
+            /> 
+          )} 
+        /> 
+      </View> 
+    );
+  }, [likedCards, memorizedCards, toggleLike, toggleMemorize]);
 
   return ( 
     <View style={{ flex: 1, backgroundColor: '#000' }}> 
@@ -1232,9 +1447,17 @@ const HomeScreen = ({
           renderItem={renderRow} 
           pagingEnabled={true} 
           showsVerticalScrollIndicator={false} 
-          keyExtractor={(item, index) => `${selectedCategory}_${item[0]?.id || index}`} 
+          keyExtractor={(item, index) => item.uniqueKey || `${selectedCategory}_${index}`} 
+          getItemLayout={(_, index) => ({
+            length: SCREEN_HEIGHT,
+            offset: SCREEN_HEIGHT * index,
+            index,
+          })}
+          onEndReached={handleLoadMoreInfinite}
+          onEndReachedThreshold={0.6}
           initialNumToRender={2} 
-          windowSize={4} 
+          maxToRenderPerBatch={3}
+          windowSize={5} 
           removeClippedSubviews={false} 
         /> 
       )}
@@ -2506,6 +2729,34 @@ const styles = StyleSheet.create({
   },
   cardContent: { flex: 1, justifyContent: 'flex-end', paddingRight: 12 },
   
+  // Bandeau Dossier Lié (exceptionnel)
+  dossierBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(245, 158, 11, 0.22)',
+    borderColor: '#f59e0b',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginBottom: 8
+  },
+  dossierBannerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flex: 1,
+    marginRight: 8
+  },
+  dossierBannerTitle: {
+    color: '#fde68a',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+    flex: 1
+  },
+
   // Méta ligne (Tags + Pagination)
   metaRow: {
     flexDirection: 'row',
@@ -2540,9 +2791,9 @@ const styles = StyleSheet.create({
     gap: 6
   },
   dotsRow: { flexDirection: 'row', gap: 4, alignItems: 'center' },
-  indicatorDot: { height: 4, borderRadius: 2 },
-  indicatorDotActive: { width: 14, backgroundColor: COLORS.primary },
-  indicatorDotInactive: { width: 5, backgroundColor: 'rgba(255,255,255,0.3)' },
+  indicatorDot: { height: 5, borderRadius: 2.5 },
+  indicatorDotActive: { width: 15, backgroundColor: '#f59e0b' },
+  indicatorDotInactive: { width: 5, backgroundColor: 'rgba(255,255,255,0.35)' },
   horizontalPillText: { color: 'rgba(255,255,255,0.9)', fontSize: 10, fontWeight: 'bold' },
 
   // Titre & Caption (Instagram Post Description Style)
@@ -2566,6 +2817,13 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 3
   },
+  bottomPillsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 9
+  },
   readMorePillBtn: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -2574,12 +2832,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 11,
     paddingVertical: 6,
     borderRadius: 14,
-    marginTop: 9,
     gap: 5
   },
   readMorePillText: {
     color: '#000',
     fontSize: 12,
+    fontWeight: '800'
+  },
+  swipeRightHintPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(245, 158, 11, 0.24)',
+    borderColor: '#f59e0b',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14
+  },
+  swipeRightHintText: {
+    color: '#fef08a',
+    fontSize: 11.5,
     fontWeight: '800'
   },
 
